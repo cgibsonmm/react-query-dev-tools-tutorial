@@ -4,11 +4,12 @@
 
 ***Topics***
 
+- React Query Overview
 - React Query Basics
 - React Query data states
 - React Query Dev tools
 
-## React Query Basics
+## React Query Overview
 
 React Query is a powerful library for managing server state in React applications. It provides tools to fetch, cache, and update data in your React components, making it easier to handle asynchronous data fetching and synchronization with your backend.
 
@@ -29,3 +30,39 @@ Here's a breakdown of what React Query offers and how it works:
 **Optimistic Updates**: The library supports optimistic updates, where you can update the UI optimistically before the server response arrives. This makes the application feel faster and more responsive.
 
 **Built-in Devtools**: React Query comes with built-in devtools that provide insight into queries and their states, making debugging easier.
+
+
+## React Query Basics
+
+pre-recs:
+We should understand the Query states that we have in React Query
+
+
+What is a Query?
+
+  - A query is a declarative dependency on an asynchronous source of data that is tied to a unique key. A query can be used with any Promise based method (including GET and POST methods) to fetch data from a server. If your method modifies data on the server, we recommend using Mutations instead.
+
+  - To subscribe to a query in your components or custom hooks(HINT: ***WE SHOULD DO THIS***), call the useQuery hook with at least:
+
+  1. A unique key for the query
+  2. A function that returns a promise that:
+       - Resolves the data, or
+       - Throws an error
+
+```tsx
+  export const useMicroservice = () => {
+    const results = useQuery({
+      // Query Key, a unique id that can be called anywhere in our app.
+      // using hooks like useQueryClient will give us a way to view the data cached
+      // with the query key. We do not always need to call this hook to view that data
+      queryKey: ["my-query-key"]
+      mutationFn: () => Promise.resolve([{title: "some title", body: "some body"}])
+    })
+
+    return {...results }
+  }
+```
+
+#### Thing to be aware of
+
+1. when using useMicroservice in a component during the componentDidMount portion of the lifecycle if the data save with the queryKey is either invalid or stale it will fire the GET request to bring the data back to a
