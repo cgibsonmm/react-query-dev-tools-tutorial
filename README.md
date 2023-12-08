@@ -56,6 +56,8 @@ What is a Query?
       // using hooks like useQueryClient will give us a way to view the data cached
       // with the query key. We do not always need to call this hook to view that data
       queryKey: ["my-query-key"]
+      // Mutation function expects a function that returns a Promise that will resolve
+      // data or throw an error
       mutationFn: () => Promise.resolve([{title: "some title", body: "some body"}])
     })
 
